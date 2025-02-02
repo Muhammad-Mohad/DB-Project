@@ -12,7 +12,9 @@ function App(){
 
   return (
     <div>
-      <p id='main'>Good Things Take Time</p>
+        <div id='main-div'>
+          <p id='message'>Good Things Take Time</p>
+      </div>
     </div>
   );
 }
