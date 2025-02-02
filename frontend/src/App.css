@@ -1,0 +1,10 @@
+body{
+  background-color: black;
+}
+#main{
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 20%;
+  color: crimson;
+}
