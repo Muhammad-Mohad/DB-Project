@@ -55,8 +55,37 @@ create table Payments
     FOREIGN key (OrderID) REFERENCES Orders(OrderID) on delete cascade  -- Every Payment has a reference for Orders via the OrderID from Orders Table
 );
 
-select * from Customers;
-select * from Products;
-select * from Orders;
-select * from OrderDetails;
-select * from Payments;
+create table Admins
+(
+    AdminID int IDENTITY(1, 1) PRIMARY KEY,     -- AdminID is the primary key for Admins Table
+    UserName NVARCHAR(100) unique not null, 
+    PasswordHash NVARCHAR(200) not null,
+);
+
+create table Stocks
+(
+    ID int IDENTITY(1, 1) PRIMARY key,  -- ID is the primary key for Stocks Table
+    ProductID int not null,
+    AdminID int not null,
+    Quantity int not null,
+    FOREIGN key (ProductID) REFERENCES Products(ProductID),   -- Every Stock has a reference for Products via the ProductID from Products Table
+    FOREIGN key (AdminID) REFERENCES Admins(AdminID)    -- Every Stock has a reference for Admins via the AdminID from Admins Table
+);
+
+create table Returns 
+(
+    ReturnID int IDENTITY(1,1) PRIMARY KEY,  -- ReturnID is the primary key for Returns Table
+    OrderDetailID int not null,
+    Reason NVARCHAR(200),
+    ReturnStatus NVARCHAR(50) CHECK (ReturnStatus IN ('Requested', 'Approved', 'Rejected', 'Refunded')),
+    RequestDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails(OrderDetailID) ON DELETE CASCADE    -- Every Return has a reference for OrderDetail via the OrderDetailID from OrderDetails Table
+);
+
+create table Reports 
+(
+    ReportID int IDENTITY(1,1) PRIMARY key,  -- ReportID is the primary key for Reports Table
+    ReportType NVARCHAR(50) CHECK (ReportType IN ('Sales', 'Stock')),
+    GeneratedDate DATETIME DEFAULT GETDATE(),
+    ReportData NVARCHAR(1000)
+);
