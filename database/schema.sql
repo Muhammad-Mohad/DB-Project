@@ -1,6 +1,16 @@
 create database myDB;
 use myDB;
 
+drop table if exists Customers;
+drop table if exists Products;
+drop table if exists Orders;
+drop table if exists OrderDetails;
+drop table if exists Payments;
+drop table if exists Admins;
+drop table if exists Stocks;
+drop table if exists Returns;
+drop table if exists Reports;
+
 create table Customers
 (
     CustomerID int IDENTITY(1, 1) PRIMARY KEY,  -- CustomerID is the primary key for Customers Table
@@ -11,6 +21,18 @@ create table Customers
     CustomerAddress NVARCHAR(200),
     CreationDate DATETIME DEFAULT GETDATE()
 );
+
+
+insert into customers (fullname, email,
+PasswordHash, PhoneNumber, CustomerAddress) values
+('Kraken', 'mohad@gmail', '123', '0333', 'PUEHS');
+
+select * from Customers;
+
+
+drop table customers;
+
+
 
 create table Products
 (

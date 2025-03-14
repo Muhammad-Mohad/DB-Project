@@ -6,6 +6,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(cors());
+app.set('json spaces', 2);
 
 const config = {
     user: "kraken",
@@ -21,18 +22,17 @@ const config = {
     port: 1433
 };
 
-app.get('/Data', async(req, res) => {
+app.get('/Data', async (req, res) => {
     try {
         const pool = await sql.connect(config);
-        const data = pool.request().query('select * from orders');
-        data.then((res1 => {
-            return res.json(res1);
-        }));
-    }
-    catch(err) {
-        console.log(err);       
+        const result = await pool.request().query('SELECT * FROM customers'); 
+        res.json(result.recordset);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message }); 
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
