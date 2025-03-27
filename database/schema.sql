@@ -41,7 +41,7 @@ create table Products
     ProductDescription NVARCHAR(500),
     Category NVARCHAR(50) Check (Category in ('GPU', 'RAM', 'CPU', 'Motherboard', 'Case', 'SSD')), 
     Price int not null,
-    Stock int not null,
+    Stock int,
     ImageURL NVARCHAR(200),
     AddedAt DATETIME DEFAULT GETDATE()
 );
