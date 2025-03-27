@@ -104,10 +104,3 @@ create table Returns
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails(OrderDetailID) ON DELETE CASCADE    -- Every Return has a reference for OrderDetail via the OrderDetailID from OrderDetails Table
 );
 
-create table Reports 
-(
-    ReportID int IDENTITY(1,1) PRIMARY key,  -- ReportID is the primary key for Reports Table
-    ReportType NVARCHAR(50) CHECK (ReportType IN ('Sales', 'Stock')),
-    GeneratedDate DATETIME DEFAULT GETDATE(),
-    ReportData NVARCHAR(1000)
-);
