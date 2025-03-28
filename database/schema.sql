@@ -1,3 +1,4 @@
+
 create database myDB;
 use myDB;
 
@@ -87,8 +88,10 @@ create table Orders
     OrderDate datetime DEFAULT GETDATE(),
     TotalAmount int not null,
     OrderStatus NVARCHAR(50) check (OrderStatus in ('Pending', 'Delivered', 'Cancelled', 'Returned')),
-    FOREIGN key (CustomerID) REFERENCES Customers(CustomerID)   -- Every order has a reference for Customers via the CustomerID from Customers Table
+    FOREIGN key (CustomerID) REFERENCES Customers(CustomerID)  on delete CASCADE -- Every order has a reference for Customers via the CustomerID from Customers Table
 );
+
+
 
 ALTER TABLE Orders
 ADD CONSTRAINT o1 CHECK (TotalAmount >= 0);
@@ -103,6 +106,7 @@ create table OrderDetails
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) on delete CASCADE,   -- Every OrderDetail has a reference for Orders via the OrderID from Orders Table
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID) on delete CASCADE    -- Every OrderDetail has a reference for Products via the ProductID from Products Table
 );
+
 
 ALTER TABLE OrderDetails
 ADD CONSTRAINT od1 CHECK (Quantity > 0);
@@ -163,6 +167,72 @@ create table Returns
 
 
 -- Queries 
+
+-- inertion queries
+
+-- Insert multiple customers
+INSERT INTO Customers (FullName, Email, PasswordHash, PhoneNumber, CustomerAddress)
+VALUES 
+('Alice Johnson', 'alice.j@example.com', 'Alice123!', '03123456789', '123 Garden St, CityA'),
+('Bob Smith', 'bob.smith@example.com', 'BobSecure456!', '03987654321', '456 Park Ave, CityB'),
+('Charlie Brown', 'charlie.b@example.com', 'CharliePass789!', '03112233445', '789 Oak Lane, CityC'),
+('Diana Prince', 'diana.p@example.com', 'DianaWonder1!', '03334455667', '101 Hero St, CityD'),
+('Ethan Hunt', 'ethan.h@example.com', 'MissionImpossible2!', '03556677889', '202 Action Rd, CityE');
+
+-- Insert multiple products
+INSERT INTO Products (ProductName, ProductDescription, Category, Price, Stock, ImageURL)
+VALUES
+('Intel Core i9-13900K', '13th Gen Intel Core i9 Processor', 'CPU', 589, 25, 'https://example.com/i9-13900k.jpg'),
+('Corsair Vengeance 32GB', 'DDR5 5600MHz Memory Kit', 'RAM', 199, 50, 'https://example.com/corsair-vengeance.jpg'),
+('ASUS ROG Strix Z790', 'LGA 1700 ATX Motherboard', 'Motherboard', 399, 15, 'https://example.com/asus-z790.jpg'),
+('Samsung 980 Pro 1TB', 'PCIe 4.0 NVMe SSD', 'SSD', 129, 30, 'https://example.com/samsung-980pro.jpg'),
+('NZXT H7 Flow', 'Mid-Tower ATX Case', 'Case', 129, 20, 'https://example.com/nzxt-h7flow.jpg');
+
+-- Insert multiple orders
+
+INSERT INTO Orders (CustomerID, TotalAmount, OrderStatus)
+VALUES
+(6, 788, 'Pending'),
+(7, 129, 'Delivered'),
+(3, 918, 'Delivered'),
+(4, 199, 'Cancelled'),
+(5, 528, 'Pending');
+
+-- Insert order details
+
+INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
+VALUES
+(5, 2, 1, 199),
+(8, 4, 1, 129),
+(9, 5, 2, 129),
+(10, 5, 1, 129),
+(11, 1, 1, 589),
+(12, 3, 1, 399)
+
+
+-- Insert payment records
+INSERT INTO Payments (OrderID, PaymentMethod, PaymentStatus)
+VALUES
+(5, 'Debit Card', 'Pending'),
+(8, 'Bank Transfer', 'Completed'),
+(9, 'Debit Card', 'Completed'),
+(10, 'Debit Card', 'Failed'),
+(12, 'Bank Transfer', 'Pending');
+
+-- Insert admin accounts
+
+INSERT INTO Admins (UserName, PasswordHash)
+VALUES
+('superadmin', 'SuperAdmin123!'),
+('inventory_manager', 'Inventory456!'),
+('sales_admin', 'SalesAdmin789!'),
+('support_admin', 'SupportAdmin101!');
+
+-- Insert return requests
+INSERT INTO Returns (OrderDetailID, Reason, ReturnStatus)
+VALUES
+(8, 'Wrong product delivered', 'Requested'),
+(9, 'Changed my mind', 'Rejected');
 
 
 -- Queries for customer table
@@ -239,11 +309,87 @@ UPDATE Payments SET PaymentStatus = 'Refunded' WHERE PaymentID = 2;
 SELECT * FROM Payments WHERE OrderID = 5;
 
 
+-- Admin queries
 
 INSERT INTO Admins (UserName, PasswordHash)
 VALUES ('admin1', 'AdminPass123!');
 
+SELECT AdminID, UserName FROM Admins 
+WHERE UserName = 'admin1' AND PasswordHash = 'AdminPass123!';
 
+-- returns management queries
+
+select  * from Returns;
+
+INSERT INTO Returns (OrderDetailID, Reason, ReturnStatus)
+VALUES (2, 'Product not as described', 'Requested');
+
+UPDATE Returns SET ReturnStatus = 'Approved' WHERE ReturnID = 2;
+
+SELECT r.ReturnID, p.ProductName, r.Reason, r.ReturnStatus, r.RequestDate
+FROM Returns r
+JOIN OrderDetails od ON r.OrderDetailID = od.OrderDetailID
+JOIN Products p ON od.ProductID = p.ProductID;
+
+
+-- inventory management queries
+
+SELECT ProductName, Stock FROM Products WHERE ProductID = 1;
+
+
+UPDATE Products SET Stock = 20 WHERE ProductID = 1;
+
+
+
+-- Deletion queries
+select * from customers;
+-- Delete a specific customer
+DELETE FROM Customers WHERE CustomerID = 5;
+
+-- Delete customers who haven't placed any orders
+DELETE FROM Customers 
+WHERE CustomerID NOT IN (SELECT DISTINCT CustomerID FROM Orders);
+
+-- Delete a specific product
+DELETE FROM Products WHERE ProductID = 5;
+
+-- Delete products with zero stock that have never been ordered
+DELETE FROM Products 
+WHERE Stock = 20 AND ProductID NOT IN (SELECT DISTINCT ProductID FROM OrderDetails);
+
+
+-- Delete a specific order
+DELETE FROM Orders WHERE OrderID = 5;
+
+-- Delete cancelled orders older than 1 year
+DELETE FROM Orders 
+WHERE OrderStatus = 'Delivered' AND OrderDate < DATEADD(YEAR, -1, GETDATE());
+
+-- Delete details for a specific order
+DELETE FROM OrderDetails WHERE OrderID = 8;
+
+-- Delete order details with quantity less than 1 (shouldn't exist due to constraint)
+DELETE FROM OrderDetails WHERE Quantity < 1;
+
+
+-- Delete a specific payment record
+DELETE FROM Payments WHERE PaymentID = 5;
+
+-- Delete failed payments older than 6 months
+DELETE FROM Payments 
+WHERE PaymentStatus = 'Failed' AND TransactionDate < DATEADD(MONTH, -6, GETDATE());
+
+-- Delete a specific return request
+DELETE FROM Returns WHERE ReturnID = 9;
+
+-- Delete completed returns older than 2 years
+DELETE FROM Returns 
+WHERE ReturnStatus IN ('Approved', 'Rejected') 
+AND RequestDate < DATEADD(YEAR, -2, GETDATE());
+
+
+select * from [Returns]
+select * from OrderDetails
 -- 
 -- CREATE TABLE ProductReviews (
 --     ReviewID INT IDENTITY(1,1) PRIMARY KEY,
@@ -270,3 +416,22 @@ VALUES ('admin1', 'AdminPass123!');
 --     ShippingCost DECIMAL(10,2) CHECK (ShippingCost >= 0),
 --     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 -- );
+
+SELECT TOP 5 
+    p.ProductID,
+    p.ProductName,
+    p.Category,
+    SUM(od.Quantity) AS TotalQuantitySold,
+    SUM(od.Quantity * od.Price) AS TotalRevenue
+FROM 
+    OrderDetails od
+JOIN 
+    Products p ON od.ProductID = p.ProductID
+JOIN 
+    Orders o ON od.OrderID = o.OrderID
+WHERE 
+    o.OrderStatus != 'Cancelled'
+GROUP BY 
+    p.ProductID, p.ProductName, p.Category
+ORDER BY 
+    TotalQuantitySold DESC;
