@@ -2,6 +2,9 @@
 create database myDB;
 use myDB;
 
+drop database myDB;
+USE master;
+
 
 drop table if exists Customers;
 drop table if exists Products;
@@ -53,8 +56,7 @@ PasswordHash, PhoneNumber, CustomerAddress) values
 
 select * from Customers;
 
-TRUNCATE table customers;
-drop table customers;
+
 
 
 
@@ -153,7 +155,6 @@ create table Stocks
     FOREIGN key (AdminID) REFERENCES Admins(AdminID)    -- Every Stock has a reference for Admins via the AdminID from Admins Table
 );
 
-drop table Stocks;
 
 create table Returns 
 (
@@ -417,7 +418,11 @@ select * from OrderDetails
 --     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 -- );
 
-SELECT TOP 5 
+--Additional complex queries
+
+--retrieve the top 3 most selling products
+
+SELECT TOP 3 
     p.ProductID,
     p.ProductName,
     p.Category,
@@ -435,3 +440,101 @@ GROUP BY
     p.ProductID, p.ProductName, p.Category
 ORDER BY 
     TotalQuantitySold DESC;
+
+
+--most profitable categories
+SELECT 
+    p.Category,
+    COUNT(DISTINCT o.OrderID) AS NumberOfOrders,
+    SUM(od.Quantity) AS TotalItemsSold,
+    SUM(od.Quantity * od.Price) AS TotalRevenue
+FROM 
+    OrderDetails od
+JOIN 
+    Products p ON od.ProductID = p.ProductID
+JOIN 
+    Orders o ON od.OrderID = o.OrderID
+WHERE 
+    o.OrderStatus != 'Cancelled'
+GROUP BY 
+    p.Category
+ORDER BY 
+    TotalRevenue DESC;
+
+
+--Highest and Lowest Priced Products in Each Category
+WITH CategoryPrices AS (
+    SELECT 
+        Category,
+        ProductName,
+        Price,
+        RANK() OVER (PARTITION BY Category ORDER BY Price DESC) AS PriceRankHigh,
+        RANK() OVER (PARTITION BY Category ORDER BY Price ASC) AS PriceRankLow
+    FROM 
+        Products
+)
+SELECT 
+    Category,
+    MAX(CASE WHEN PriceRankHigh = 1 THEN ProductName + ' ($' + CAST(Price AS VARCHAR) END) AS HighestPricedProduct,
+    MAX(CASE WHEN PriceRankLow = 1 THEN ProductName + ' ($' + CAST(Price AS VARCHAR) END) AS LowestPricedProduct
+FROM 
+    CategoryPrices
+GROUP BY 
+    Category;
+
+
+--Monthly sales report
+SELECT 
+    YEAR(o.OrderDate) AS Year,
+    MONTH(o.OrderDate) AS Month,
+    COUNT(o.OrderID) AS NumberOfOrders,
+    SUM(o.TotalAmount) AS TotalRevenue,
+    AVG(o.TotalAmount) AS AverageOrderValue
+FROM 
+    Orders o
+WHERE 
+    o.OrderStatus = 'Delivered'
+GROUP BY 
+    YEAR(o.OrderDate), MONTH(o.OrderDate)
+ORDER BY 
+    Year, Month;
+
+
+--Products Running Low on Stock (Below 5 items)
+
+SELECT 
+    ProductID,
+    ProductName,
+    Category,
+    Stock,
+    CASE 
+        WHEN Stock = 0 THEN 'Out of Stock'
+        WHEN Stock <= 2 THEN 'Critical'
+        WHEN Stock <= 5 THEN 'Low'
+    END AS StockStatus
+FROM 
+    Products
+WHERE 
+    Stock <= 5
+ORDER BY 
+    Stock ASC;
+
+
+-- Payment Method Analysis
+SELECT 
+    p.PaymentMethod,
+    COUNT(p.PaymentID) AS NumberOfPayments,
+    SUM(o.TotalAmount) AS TotalAmountProcessed,
+    AVG(o.TotalAmount) AS AveragePaymentAmount,
+    SUM(CASE WHEN p.PaymentStatus = 'Failed' THEN 1 ELSE 0 END) AS FailedPayments,
+    CAST(SUM(CASE WHEN p.PaymentStatus = 'Failed' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(p.PaymentID) * 100 AS FailureRatePercentage
+FROM 
+    Payments p
+JOIN 
+    Orders o ON p.OrderID = o.OrderID
+GROUP BY 
+    p.PaymentMethod
+ORDER BY 
+    TotalAmountProcessed DESC;
+
+
