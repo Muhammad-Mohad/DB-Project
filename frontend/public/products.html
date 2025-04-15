@@ -471,7 +471,7 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="/" class="logo">
+                <a href="index.html" class="logo">
                     <i class="fas fa-microchip"></i>
                     <span>PC Parts Hub</span>
                 </a>
@@ -509,6 +509,7 @@
                         <option value="motherboard">Motherboard</option>
                         <option value="ssd">SSD</option>
                         <option value="case">Case</option>
+                        <option value="cooler">Cooler</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -523,12 +524,12 @@
             </div>
         </div>
 
-        <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
+        <div class="products-grid" id="productsGrid">
+            <!-- Product 1 - NVIDIA GPU -->
+            <div class="product-card" data-category="gpu" data-price="1599" data-popularity="5" data-date="2023-10-15">
                 <div class="product-image-container">
                     <span class="product-badge">New</span>
-                    <img src="https://via.placeholder.com/300x200?text=RTX+4090" alt="NVIDIA RTX 4090" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="NVIDIA RTX 4090" class="product-image">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">NVIDIA GeForce RTX 4090</h3>
@@ -545,10 +546,10 @@
                 </div>
             </div>
             
-            <!-- Product 2 -->
-            <div class="product-card">
+            <!-- Product 2 - Intel CPU -->
+            <div class="product-card" data-category="cpu" data-price="589" data-popularity="4" data-date="2023-09-20">
                 <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=Intel+i9" alt="Intel Core i9" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Intel Core i9" class="product-image">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Intel Core i9-13900K</h3>
@@ -564,16 +565,16 @@
                 </div>
             </div>
             
-            <!-- Product 3 -->
-            <div class="product-card">
+            <!-- Product 3 - Corsair RAM -->
+            <div class="product-card" data-category="ram" data-price="199" data-popularity="3" data-date="2023-08-10">
                 <div class="product-image-container">
                     <span class="product-badge">Sale</span>
-                    <img src="https://via.placeholder.com/300x200?text=Corsair+RAM" alt="Corsair RAM" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1592155931584-901ac15763e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Corsair RAM" class="product-image">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Corsair Vengeance 32GB</h3>
+                    <h3 class="product-title">Corsair Vengeance RGB 32GB</h3>
                     <span class="product-category">RAM</span>
-                    <p class="product-description">DDR5 5600MHz Memory Kit for high-performance systems with RGB lighting.</p>
+                    <p class="product-description">DDR5 5600MHz Memory Kit with vibrant RGB lighting and excellent performance.</p>
                     <div class="product-footer">
                         <div>
                             <span class="product-price">$199</span>
@@ -585,15 +586,15 @@
                 </div>
             </div>
             
-            <!-- Product 4 -->
-            <div class="product-card">
+            <!-- Product 4 - ASUS Motherboard -->
+            <div class="product-card" data-category="motherboard" data-price="399" data-popularity="4" data-date="2023-07-25">
                 <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=ASUS+Motherboard" alt="ASUS Motherboard" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1552831388-4a03727b1a21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="ASUS Motherboard" class="product-image">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">ASUS ROG Strix Z790</h3>
+                    <h3 class="product-title">ASUS ROG Strix Z790-E</h3>
                     <span class="product-category">Motherboard</span>
-                    <p class="product-description">LGA 1700 ATX Motherboard with PCIe 5.0, DDR5 support, and Wi-Fi 6E.</p>
+                    <p class="product-description">Premium LGA 1700 ATX motherboard with PCIe 5.0, DDR5 support, and Wi-Fi 6E.</p>
                     <div class="product-footer">
                         <div>
                             <span class="product-price">$399</span>
@@ -604,15 +605,15 @@
                 </div>
             </div>
             
-            <!-- Product 5 -->
-            <div class="product-card">
+            <!-- Product 5 - Samsung SSD -->
+            <div class="product-card" data-category="ssd" data-price="129" data-popularity="3" data-date="2023-06-15">
                 <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=Samsung+SSD" alt="Samsung SSD" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Samsung SSD" class="product-image">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Samsung 980 Pro 1TB</h3>
+                    <h3 class="product-title">Samsung 990 Pro 1TB</h3>
                     <span class="product-category">SSD</span>
-                    <p class="product-description">PCIe 4.0 NVMe SSD with read speeds up to 7,000 MB/s for ultra-fast storage.</p>
+                    <p class="product-description">PCIe 4.0 NVMe SSD with read speeds up to 7,450 MB/s for ultra-fast storage.</p>
                     <div class="product-footer">
                         <div>
                             <span class="product-price">$129</span>
@@ -623,18 +624,18 @@
                 </div>
             </div>
             
-            <!-- Product 6 -->
-            <div class="product-card">
+            <!-- Product 6 - NZXT Case -->
+            <div class="product-card" data-category="case" data-price="149" data-popularity="2" data-date="2023-05-10">
                 <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=NZXT+Case" alt="NZXT Case" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1563212035-a5e1ba6b3235?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="NZXT Case" class="product-image">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">NZXT H7 Flow</h3>
+                    <h3 class="product-title">NZXT H7 Flow RGB</h3>
                     <span class="product-category">Case</span>
-                    <p class="product-description">Mid-Tower ATX Case with tempered glass, excellent airflow, and cable management.</p>
+                    <p class="product-description">Mid-Tower ATX Case with tempered glass, RGB fans, and excellent airflow.</p>
                     <div class="product-footer">
                         <div>
-                            <span class="product-price">$129</span>
+                            <span class="product-price">$149</span>
                         </div>
                         <span class="stock-status out-of-stock">Out of Stock</span>
                     </div>
@@ -642,19 +643,19 @@
                 </div>
             </div>
             
-            <!-- Product 7 -->
-            <div class="product-card">
+            <!-- Product 7 - AMD GPU -->
+            <div class="product-card" data-category="gpu" data-price="999" data-popularity="4" data-date="2023-09-05">
                 <div class="product-image-container">
                     <span class="product-badge">Best Seller</span>
-                    <img src="https://via.placeholder.com/300x200?text=AMD+GPU" alt="AMD GPU" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1626218174358-7769486c4b79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="AMD GPU" class="product-image">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">AMD Radeon RX 7900 XT</h3>
+                    <h3 class="product-title">AMD Radeon RX 7900 XTX</h3>
                     <span class="product-category">GPU</span>
-                    <p class="product-description">20GB GDDR6 memory with AMD RDNA 3 architecture for high-performance gaming.</p>
+                    <p class="product-description">24GB GDDR6 memory with AMD RDNA 3 architecture for 4K gaming.</p>
                     <div class="product-footer">
                         <div>
-                            <span class="product-price">$899</span>
+                            <span class="product-price">$999</span>
                         </div>
                         <span class="stock-status in-stock">In Stock</span>
                     </div>
@@ -662,15 +663,15 @@
                 </div>
             </div>
             
-            <!-- Product 8 -->
-            <div class="product-card">
+            <!-- Product 8 - Noctua Cooler -->
+            <div class="product-card" data-category="cooler" data-price="109" data-popularity="3" data-date="2023-04-18">
                 <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=Noctua+Cooler" alt="Noctua Cooler" class="product-image">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Noctua Cooler" class="product-image">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Noctua NH-D15</h3>
+                    <h3 class="product-title">Noctua NH-D15 Chromax</h3>
                     <span class="product-category">Cooler</span>
-                    <p class="product-description">Premium dual-tower CPU cooler with renowned quiet performance and cooling.</p>
+                    <p class="product-description">Premium dual-tower CPU cooler with black finish and renowned quiet performance.</p>
                     <div class="product-footer">
                         <div>
                             <span class="product-price">$109</span>
@@ -742,37 +743,49 @@
                 : '<i class="fas fa-bars"></i>';
         });
 
-        // Filter functionality (simplified example)
+        // Filter and sort functionality
         const categoryFilter = document.getElementById('category-filter');
         const sortBy = document.getElementById('sort-by');
-        const productCards = document.querySelectorAll('.product-card');
+        const productsGrid = document.getElementById('productsGrid');
+        const productCards = Array.from(document.querySelectorAll('.product-card'));
 
-        categoryFilter.addEventListener('change', filterProducts);
-        sortBy.addEventListener('change', filterProducts);
+        categoryFilter.addEventListener('change', filterAndSortProducts);
+        sortBy.addEventListener('change', filterAndSortProducts);
 
-        function filterProducts() {
+        function filterAndSortProducts() {
             const category = categoryFilter.value;
             const sort = sortBy.value;
             
-            // In a real implementation, this would make an API call
-            // Here we just simulate filtering
-            console.log(`Filtering by: ${category}, Sort by: ${sort}`);
-            
-            // Example: Hide products that don't match the selected category
+            // Filter products by category
+            let filteredProducts = productCards;
             if (category !== 'all') {
-                productCards.forEach(card => {
-                    const cardCategory = card.querySelector('.product-category').textContent.toLowerCase();
-                    if (cardCategory !== category) {
-                        card.style.display = 'none';
-                    } else {
-                        card.style.display = 'flex';
-                    }
-                });
-            } else {
-                productCards.forEach(card => {
-                    card.style.display = 'flex';
+                filteredProducts = productCards.filter(card => {
+                    return card.dataset.category === category;
                 });
             }
+            
+            // Sort products
+            filteredProducts.sort((a, b) => {
+                switch(sort) {
+                    case 'price-low':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'price-high':
+                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                    case 'newest':
+                        return new Date(b.dataset.date) - new Date(a.dataset.date);
+                    case 'popular':
+                    default:
+                        return parseFloat(b.dataset.popularity) - parseFloat(a.dataset.popularity);
+                }
+            });
+            
+            // Clear the grid
+            productsGrid.innerHTML = '';
+            
+            // Re-add the sorted and filtered products
+            filteredProducts.forEach(card => {
+                productsGrid.appendChild(card);
+            });
         }
 
         // Add to cart functionality
