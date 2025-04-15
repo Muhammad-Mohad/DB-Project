@@ -755,6 +755,11 @@
     </footer>
 
     <script>
+        // Check if user is logged in (simulated with localStorage)
+        if(!localStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+
         // Mobile menu toggle functionality
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
@@ -786,6 +791,13 @@
                     this.style.backgroundColor = 'var(--primary)';
                 }, 1000);
             });
+        });
+
+        // Logout functionality (for account link)
+        document.querySelector('a[href="/account"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
         });
     </script>
 </body>
