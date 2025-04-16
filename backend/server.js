@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const customerRoutes = require('./routes/customerRoutes');
-app.use('/data', customerRoutes);
+app.use('/customers', customerRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

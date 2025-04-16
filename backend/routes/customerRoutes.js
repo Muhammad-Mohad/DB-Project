@@ -17,21 +17,29 @@ const config = {
     port: 1433
 };
 
-router.get('/customers', async (req, res) => {
-    try 
-    {
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params; 
         const pool = await sql.connect(config);
-        const result = await pool.request().query('SELECT * FROM Customers');
-        res.json(result.recordset);
+        
+        const result = await pool.request()
+            .input('id', sql.Int, id)
+            .query('SELECT * FROM Customers WHERE customerid = @id');
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ message: 'Customer not found' });
+        }
+
+        res.json(result.recordset[0]); 
     } 
-    catch(err) 
-    {
+    catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
     }
 });
 
-router.post('/', async (req, res) => {
+
+router.post('/signup', async (req, res) => {
     const { FullName, Email, PasswordHash, PhoneNumber, CustomerAddress } = req.body;
     try 
     {
@@ -55,7 +63,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
     const { id } = req.params;
     const { FullName, Email, PhoneNumber, CustomerAddress } = req.body;
     try 
@@ -80,7 +88,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params;
     try 
     {

@@ -1,6 +1,6 @@
 
 -- Queries 
-
+select * from Customers;
 -- inertion queries
 
 -- Insert multiple customers
