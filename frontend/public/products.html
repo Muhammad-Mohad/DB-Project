@@ -3,61 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop PC Components | PC Parts Hub</title>
+    <title>Shop PC Components | NexGen Hardware</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Base Styles */
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #f59e0b;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
             --dark: #1e293b;
             --light: #f8fafc;
-            --gray: #94a3b8;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --border: #e2e8f0;
+            --gray: #64748b;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
             line-height: 1.6;
         }
-
+        
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        /* Header & Navigation */
-        header {
+        
+        /* Navbar */
+        nav {
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
+        
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
         }
-
+        
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
@@ -65,117 +58,96 @@
             align-items: center;
             gap: 10px;
         }
-
-        .logo i {
-            font-size: 1.8rem;
+        
+        .logo::before {
+            content: "⚡";
+            font-size: 1.5rem;
         }
-
+        
         .nav-links {
             display: flex;
-            gap: 25px;
-            align-items: center;
+            gap: 30px;
         }
-
+        
         .nav-links a {
             color: var(--dark);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
             position: relative;
-            padding: 5px 0;
+            display: flex;
+            align-items: center;
         }
-
+        
         .nav-links a:hover {
             color: var(--primary);
         }
-
-        .nav-links a.active {
-            color: var(--primary);
-        }
-
+        
         .nav-links a.active::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 100%;
             height: 2px;
             background-color: var(--primary);
         }
-
-        .cart-icon {
-            position: relative;
-            font-size: 1.2rem;
-        }
-
+        
         .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
             background-color: var(--primary);
             color: white;
             border-radius: 50%;
             width: 20px;
             height: 20px;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
+            margin-left: 5px;
         }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-            cursor: pointer;
-        }
-
-        /* Main Content Styles */
+        
+        /* Products Header */
         .products-header {
-            margin: 30px 0;
+            margin: 40px 0 30px;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
+        
         .products-header h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--dark);
             font-weight: 700;
         }
-
+        
         .filter-controls {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             align-items: center;
         }
-
+        
         .filter-group {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+        
         .filter-group label {
             font-weight: 500;
             color: var(--dark);
         }
-
+        
         .filter-group select {
             padding: 8px 12px;
-            border: 1px solid var(--border);
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
             background-color: white;
             font-size: 14px;
             min-width: 180px;
             cursor: pointer;
-            transition: all 0.2s;
         }
-
+        
         /* Products Grid */
         .products-grid {
             display: grid;
@@ -183,7 +155,7 @@
             gap: 25px;
             margin: 30px 0;
         }
-
+        
         .product-card {
             background-color: white;
             border-radius: 8px;
@@ -193,12 +165,12 @@
             display: flex;
             flex-direction: column;
         }
-
+        
         .product-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-
+        
         .product-image-container {
             height: 200px;
             background-color: #f1f5f9;
@@ -208,14 +180,14 @@
             padding: 20px;
             position: relative;
         }
-
+        
         .product-image {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             mix-blend-mode: multiply;
         }
-
+        
         .product-badge {
             position: absolute;
             top: 10px;
@@ -227,21 +199,21 @@
             font-size: 12px;
             font-weight: 500;
         }
-
+        
         .product-info {
             padding: 20px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
-
+        
         .product-title {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--dark);
         }
-
+        
         .product-category {
             font-size: 0.8rem;
             color: var(--gray);
@@ -249,266 +221,134 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
+        
         .product-description {
             font-size: 0.9rem;
-            color: #64748b;
+            color: var(--gray);
             margin-bottom: 15px;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
+        
         .product-footer {
             margin-top: auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
+        
         .product-price {
             font-weight: 700;
             font-size: 1.2rem;
             color: var(--dark);
         }
-
-        .product-old-price {
-            text-decoration: line-through;
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-left: 5px;
-        }
-
+        
         .stock-status {
             font-size: 0.8rem;
             padding: 4px 8px;
             border-radius: 4px;
             font-weight: 500;
         }
-
+        
         .in-stock {
             background-color: #ecfdf5;
-            color: var(--success);
+            color: #10b981;
         }
-
+        
         .low-stock {
             background-color: #fef3c7;
-            color: var(--warning);
+            color: #f59e0b;
         }
-
-        .out-of-stock {
-            background-color: #fee2e2;
-            color: var(--danger);
-        }
-
+        
         .add-to-cart {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
             transition: background-color 0.2s;
             width: 100%;
             margin-top: 15px;
         }
-
+        
         .add-to-cart:hover {
             background-color: var(--primary-dark);
         }
-
-        .add-to-cart:disabled {
-            background-color: #cbd5e1;
-            cursor: not-allowed;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .pagination-btn {
-            padding: 8px 16px;
-            background-color: white;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .pagination-btn:hover:not(:disabled) {
-            background-color: #f1f5f9;
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .page-info {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        /* Footer Styles */
+        
+        /* Footer */
         footer {
             background-color: var(--dark);
             color: white;
-            padding: 40px 0;
-            margin-top: 40px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .copyright {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
-            font-size: 0.9rem;
+            padding: 30px 0;
+            margin-top: 80px;
         }
-
-        /* Responsive Design */
+        
+        .footer-content {
+            padding: 20px 0;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background-color: white;
-                flex-direction: column;
-                gap: 0;
-                padding: 20px 0;
-                transition: left 0.3s ease;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links a {
-                padding: 15px 20px;
-                width: 100%;
-                text-align: center;
-            }
-
-            .nav-links a.active::after {
-                display: none;
-            }
-
             .filter-controls {
                 flex-direction: column;
                 align-items: flex-start;
             }
-
+            
             .filter-group {
                 width: 100%;
             }
-
+            
             .filter-group select {
                 width: 100%;
             }
-
+            
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             }
         }
-
+        
         @media (max-width: 480px) {
             .products-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .product-card {
-                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header with Navigation -->
-    <header>
+    <!-- Navbar -->
+    <nav>
         <div class="container">
-            <nav class="navbar">
-                <a href="/" class="logo">
-                    <i class="fas fa-microchip"></i>
-                    <span>PC Parts Hub</span>
-                </a>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <div class="nav-links" id="navLinks">
+            <div class="navbar">
+                <a href="index.html" class="logo">NexGen Hardware</a>
+                <div class="nav-links">
                     <a href="index.html">Home</a>
                     <a href="products.html" class="active">Shop</a>
-                    <a href="/build">Custom Build</a>
-                    <a href="/about">About</a>
-                    <a href="/account">Account</a>
-                    <a href="cart.html" class="cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">3</span>
-                    </a>
+                    <a href="about.html">About</a>
+                    <a href="account.html">Account</a>
+                    <a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a>
                 </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="container">
         <div class="products-header">
-            <h1>Shop PC Components</h1>
+            <h1>Premium PC Components</h1>
             <div class="filter-controls">
                 <div class="filter-group">
                     <label for="category-filter">Category:</label>
                     <select id="category-filter">
-                        <option value="all">All Categories</option>
-                        <option value="gpu">GPU</option>
-                        <option value="cpu">CPU</option>
-                        <option value="ram">RAM</option>
-                        <option value="motherboard">Motherboard</option>
-                        <option value="ssd">SSD</option>
-                        <option value="case">Case</option>
+                        <option value="all">All Components</option>
+                        <option value="gpu">Graphics Cards</option>
+                        <option value="cpu">Processors</option>
+                        <option value="ram">Memory</option>
+                        <option value="motherboard">Motherboards</option>
+                        <option value="ssd">Storage</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -517,175 +357,14 @@
                         <option value="popular">Most Popular</option>
                         <option value="price-low">Price: Low to High</option>
                         <option value="price-high">Price: High to Low</option>
-                        <option value="newest">Newest Arrivals</option>
+                        <option value="newest">New Arrivals</option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <span class="product-badge">New</span>
-                    <img src="https://via.placeholder.com/300x200?text=RTX+4090" alt="NVIDIA RTX 4090" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">NVIDIA GeForce RTX 4090</h3>
-                    <span class="product-category">GPU</span>
-                    <p class="product-description">The ultimate GPU for gamers and creators with 24GB GDDR6X memory and DLSS 3 technology.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$1,599</span>
-                            <span class="product-old-price">$1,799</span>
-                        </div>
-                        <span class="stock-status in-stock">In Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=Intel+i9" alt="Intel Core i9" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Intel Core i9-13900K</h3>
-                    <span class="product-category">CPU</span>
-                    <p class="product-description">13th Gen Intel Core i9 Processor with 24 cores (8 Performance + 16 Efficient) and 32 threads.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$589</span>
-                        </div>
-                        <span class="stock-status in-stock">In Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <span class="product-badge">Sale</span>
-                    <img src="https://via.placeholder.com/300x200?text=Corsair+RAM" alt="Corsair RAM" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Corsair Vengeance 32GB</h3>
-                    <span class="product-category">RAM</span>
-                    <p class="product-description">DDR5 5600MHz Memory Kit for high-performance systems with RGB lighting.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$199</span>
-                            <span class="product-old-price">$249</span>
-                        </div>
-                        <span class="stock-status low-stock">Low Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=ASUS+Motherboard" alt="ASUS Motherboard" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">ASUS ROG Strix Z790</h3>
-                    <span class="product-category">Motherboard</span>
-                    <p class="product-description">LGA 1700 ATX Motherboard with PCIe 5.0, DDR5 support, and Wi-Fi 6E.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$399</span>
-                        </div>
-                        <span class="stock-status in-stock">In Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 5 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=Samsung+SSD" alt="Samsung SSD" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Samsung 980 Pro 1TB</h3>
-                    <span class="product-category">SSD</span>
-                    <p class="product-description">PCIe 4.0 NVMe SSD with read speeds up to 7,000 MB/s for ultra-fast storage.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$129</span>
-                        </div>
-                        <span class="stock-status in-stock">In Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 6 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=NZXT+Case" alt="NZXT Case" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">NZXT H7 Flow</h3>
-                    <span class="product-category">Case</span>
-                    <p class="product-description">Mid-Tower ATX Case with tempered glass, excellent airflow, and cable management.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$129</span>
-                        </div>
-                        <span class="stock-status out-of-stock">Out of Stock</span>
-                    </div>
-                    <button class="add-to-cart" disabled>Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 7 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <span class="product-badge">Best Seller</span>
-                    <img src="https://via.placeholder.com/300x200?text=AMD+GPU" alt="AMD GPU" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">AMD Radeon RX 7900 XT</h3>
-                    <span class="product-category">GPU</span>
-                    <p class="product-description">20GB GDDR6 memory with AMD RDNA 3 architecture for high-performance gaming.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$899</span>
-                        </div>
-                        <span class="stock-status in-stock">In Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            
-            <!-- Product 8 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="https://via.placeholder.com/300x200?text=Noctua+Cooler" alt="Noctua Cooler" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Noctua NH-D15</h3>
-                    <span class="product-category">Cooler</span>
-                    <p class="product-description">Premium dual-tower CPU cooler with renowned quiet performance and cooling.</p>
-                    <div class="product-footer">
-                        <div>
-                            <span class="product-price">$109</span>
-                        </div>
-                        <span class="stock-status in-stock">In Stock</span>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="pagination">
-            <button class="pagination-btn" disabled>Previous</button>
-            <span class="page-info">Page 1 of 3</span>
-            <button class="pagination-btn">Next</button>
+        <div class="products-grid" id="products-grid">
+            <!-- Products will be rendered here by JavaScript -->
         </div>
     </main>
 
@@ -693,110 +372,202 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3>PC Parts Hub</h3>
-                    <p>Premium components for your computing needs since 2023.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Shop</h3>
-                    <ul class="footer-links">
-                        <li><a href="/products/gpu">Graphics Cards</a></li>
-                        <li><a href="/products/cpu">Processors</a></li>
-                        <li><a href="/products/ram">Memory</a></li>
-                        <li><a href="/products/ssd">Storage</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="/contact">Contact Us</a></li>
-                        <li><a href="/faq">FAQs</a></li>
-                        <li><a href="/shipping">Shipping Policy</a></li>
-                        <li><a href="/returns">Returns</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/blog">Blog</a></li>
-                        <li><a href="/careers">Careers</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 PC Parts Hub. All rights reserved.</p>
+                <p>&copy; 2025 NexGen Hardware. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
+        // Product data
+        const products = [
+            {
+                id: 1,
+                title: "NVIDIA GeForce RTX 4080",
+                category: "gpu",
+                description: "16GB GDDR6X memory with DLSS 3 technology for ultimate gaming performance.",
+                price: 1199,
+                stock: "in-stock",
+                badge: "Best Seller",
+                isNew: false,
+                popularity: 5
+            },
+            {
+                id: 2,
+                title: "Intel Core i7-14700K",
+                category: "cpu",
+                description: "14th Gen Intel Core i7 Processor with 20 cores and 28 threads.",
+                price: 449,
+                stock: "in-stock",
+                badge: "New",
+                isNew: true,
+                popularity: 4
+            },
+            {
+                id: 3,
+                title: "G.Skill Trident Z5 32GB",
+                category: "ram",
+                description: "DDR5 6000MHz Memory Kit optimized for Intel and AMD systems.",
+                price: 179,
+                stock: "in-stock",
+                badge: "",
+                isNew: false,
+                popularity: 3
+            },
+            {
+                id: 4,
+                title: "ASUS ROG Strix B650",
+                category: "motherboard",
+                description: "AM5 ATX Motherboard with PCIe 5.0 and DDR5 support for AMD Ryzen.",
+                price: 299,
+                stock: "in-stock",
+                badge: "",
+                isNew: false,
+                popularity: 2
+            },
+            {
+                id: 5,
+                title: "Samsung 990 Pro 1TB",
+                category: "ssd",
+                description: "PCIe 4.0 NVMe SSD with read speeds up to 7,450 MB/s.",
+                price: 139,
+                stock: "low-stock",
+                badge: "",
+                isNew: false,
+                popularity: 4
+            },
+            {
+                id: 6,
+                title: "AMD Radeon RX 7800 XT",
+                category: "gpu",
+                description: "16GB GDDR6 memory with AMD RDNA 3 architecture for 1440p gaming.",
+                price: 599,
+                stock: "in-stock",
+                badge: "",
+                isNew: true,
+                popularity: 3
+            }
+        ];
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Filter functionality (simplified example)
+        // DOM elements
+        const productsGrid = document.getElementById('products-grid');
         const categoryFilter = document.getElementById('category-filter');
         const sortBy = document.getElementById('sort-by');
-        const productCards = document.querySelectorAll('.product-card');
+        const cartCountElement = document.getElementById('cart-count');
 
-        categoryFilter.addEventListener('change', filterProducts);
-        sortBy.addEventListener('change', filterProducts);
+        // Initialize cart count
+        updateCartCount();
 
-        function filterProducts() {
+        // Event listeners
+        categoryFilter.addEventListener('change', renderProducts);
+        sortBy.addEventListener('change', renderProducts);
+
+        // Initial render
+        renderProducts();
+
+        // Update cart count function
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCountElement.textContent = count;
+        }
+
+        // Add to cart function
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    quantity: 1,
+                    image: `https://via.placeholder.com/300x200?text=${product.title.replace(/\s+/g, '+')}`
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // Render products based on filters
+        function renderProducts() {
             const category = categoryFilter.value;
             const sort = sortBy.value;
             
-            // In a real implementation, this would make an API call
-            // Here we just simulate filtering
-            console.log(`Filtering by: ${category}, Sort by: ${sort}`);
+            // Filter by category
+            let filteredProducts = category === 'all' 
+                ? [...products] 
+                : products.filter(product => product.category === category);
             
-            // Example: Hide products that don't match the selected category
-            if (category !== 'all') {
-                productCards.forEach(card => {
-                    const cardCategory = card.querySelector('.product-category').textContent.toLowerCase();
-                    if (cardCategory !== category) {
-                        card.style.display = 'none';
-                    } else {
-                        card.style.display = 'flex';
-                    }
-                });
-            } else {
-                productCards.forEach(card => {
-                    card.style.display = 'flex';
-                });
+            // Sort products
+            switch(sort) {
+                case 'popular':
+                    filteredProducts.sort((a, b) => b.popularity - a.popularity);
+                    break;
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.isNew - a.isNew);
+                    break;
             }
-        }
+            
+            // Clear the grid
+            productsGrid.innerHTML = '';
+            
+            // Render filtered and sorted products
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.dataset.id = product.id;
+                productCard.innerHTML = `
+                    <div class="product-image-container">
+                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                        <img src="https://via.placeholder.com/300x200?text=${product.title.replace(/\s+/g, '+')}" alt="${product.title}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <span class="product-category">${product.category.toUpperCase()}</span>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-footer">
+                            <span class="product-price">$${product.price}</span>
+                            <span class="stock-status ${product.stock}">
+                                ${product.stock === 'in-stock' ? 'In Stock' : 'Low Stock'}
+                            </span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
 
-        // Add to cart functionality
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
-        const cartCount = document.querySelector('.cart-count');
-        let cartItems = 3; // Starting with 3 items for demo
-
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (!this.disabled) {
-                    cartItems++;
-                    cartCount.textContent = cartItems;
+            // Add event listeners to new add-to-cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.closest('.product-card').dataset.id);
+                    addToCart(productId);
                     
                     // Visual feedback
+                    const originalText = this.textContent;
                     this.textContent = 'Added!';
-                    this.style.backgroundColor = 'var(--success)';
+                    this.style.backgroundColor = '#10b981';
                     
                     setTimeout(() => {
-                        this.textContent = 'Add to Cart';
+                        this.textContent = originalText;
                         this.style.backgroundColor = 'var(--primary)';
                     }, 1000);
-                }
+                });
             });
-        });
+        }
     </script>
 </body>
 </html>
