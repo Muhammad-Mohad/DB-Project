@@ -219,5 +219,40 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Simple cart count update for demo
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartCount = document.querySelector('.cart-count');
+        let cartItems = 3;
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                cartItems++;
+                cartCount.textContent = cartItems;
+                
+                // Visual feedback
+                const originalText = this.textContent;
+                this.textContent = 'Added!';
+                this.style.backgroundColor = 'var(--success)';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.backgroundColor = 'var(--primary)';
+                }, 1000);
+            });
+        });
+    </script>
 </body>
 </html>
