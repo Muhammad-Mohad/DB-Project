@@ -8,7 +8,6 @@ import AboutPage from './components/about.jsx'
 import CartPage from './components/cart.jsx'
 import LoginPage from './components/login.jsx'
 import SignupPage from './components/signup.jsx'
-import CheckoutPage from './components/checkout.jsx'
 
 
 function App() {
@@ -17,12 +16,10 @@ return(
 {/* <Index></Index> */}
 {/* <ProductsPage></ProductsPage> */}
 {/* <AccountPage></AccountPage> */}
-{/* <AboutPage></AboutPage> */}
-
+<AboutPage></AboutPage>
 {/* <LoginPage></LoginPage> */}
 {/* <SignupPage></SignupPage> */}
-{/* <CheckoutPage></CheckoutPage> */}
-<CartPage></CartPage>
+{/* <CartPage></CartPage> */}
 </>
 )
 
