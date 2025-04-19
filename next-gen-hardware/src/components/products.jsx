@@ -1,6 +1,25 @@
 import { useState, useEffect } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 
+import id1 from './images/id1.jpg';
+import id2 from './images/id2.jpg';
+import id3 from './images/id3.webp';
+import id4 from './images/id4.jpeg';
+import id5 from './images/id5.jpg';
+import id6 from './images/id6.png';
+import id7 from './images/id7.webp';
+import id8 from './images/id8.jpg';
+import id9 from './images/id9.jpg';
+import id10 from './images/id10.jpg';
+import id11 from './images/id11.jpg';
+import id12 from './images/id12.jpg';
+import id13 from './images/id13.jpg';
+import id14 from './images/id14.jpg';
+import id15 from './images/id15.jpg';
+import id16 from './images/id16.webp';
+
+
+
 const ProductsPage = () => {
   // Product data with actual images
   const products = [
@@ -14,7 +33,7 @@ const ProductsPage = () => {
       badge: "Best Seller",
       isNew: false,
       popularity: 5,
-      image: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/ada/rtx-4080/geforce-ada-4080-og-1200x630.jpg"
+      image: id1
     },
     {
       id: 2,
@@ -26,7 +45,7 @@ const ProductsPage = () => {
       badge: "New",
       isNew: true,
       popularity: 4,
-      image: "https://static3.webx.pk/files/19643/Images/intel-core-i7-14700k-cpu-price-in-pakistan-2-19643-0-031223021450978.jpg"
+      image: id2
     },
     {
       id: 3,
@@ -38,7 +57,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 3,
-      image: "https://zahcomputers.pk/wp-content/uploads/2024/06/107710-G.SKILL-F5-5600J3636D32GA2-TZ5RK-RGB-64GB-Desktop-Memory-pakistan.jpg.webp"
+      image: id3
     },
     {
       id: 4,
@@ -50,7 +69,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 2,
-      image: "https://dlcdnwebimgs.asus.com/files/media/3151EBBB-8450-43F6-9994-D7E5E6A9D0E5/v1/img/spec/performance-m.png"
+      image: id4
     },
     {
       id: 5,
@@ -62,7 +81,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 4,
-      image: "https://elitegamingstore.pk/wp-content/uploads/2024/02/Samsung-990-PRO3.jpg"
+      image: id5
     },
     {
       id: 6,
@@ -74,7 +93,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: true,
       popularity: 3,
-      image: "https://static.gigabyte.com/StaticFile/Image/Global/369cb90b3cf9ca4b7b00802e3a1ce7b8/Product/36215/png/300"
+      image: id6
     },
     {
       id: 7,
@@ -86,7 +105,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 4,
-      image: "https://w11stop.com/image/cache/catalog/1-product-images/corsair/corsair-rm850x-modular-psu-600x315w.jpg.webp"
+      image: id7
     },
     {
       id: 8,
@@ -98,7 +117,7 @@ const ProductsPage = () => {
       badge: "Best Seller",
       isNew: false,
       popularity: 5,
-      image: "https://img.globaldata.pt/products/NH-D15CH.BK_5.jpg"
+      image: id8
     },
     {
       id: 9,
@@ -110,7 +129,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 4,
-      image: "https://cdn.mos.cms.futurecdn.net/WzuALAMWiCQ9DRN4MHey94-1200-80.jpg"
+      image: id9
     },
     {
       id: 10,
@@ -122,7 +141,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: true,
       popularity: 3,
-      image: "https://uk.crucial.com/content/dam/crucial/ssd-products/p5-plus/images/products/Crucial-p5-plus-ssd-standing-up-on-white-cropped-Image.psd.transform/small-jpg/img.jpg"
+      image: id10
     },
     {
       id: 11,
@@ -134,7 +153,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 4,
-      image: "https://static3.webx.pk/files/821/Images/black-821-604096-110321072907.jpg"
+      image: id11
     },
     {
       id: 12,
@@ -146,7 +165,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 3,
-      image: "https://images-cdn.ubuy.co.in/66cd6e90ffa56b66e15079e9-nzxt-kraken-x53-rgb-240mm-rl-krx53-rw.jpg"
+      image: id12
     },
     {
       id: 13,
@@ -158,7 +177,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: true,
       popularity: 3,
-      image: "https://static3.webx.pk/files/19643/Images/msi-b760-tomahawk-wifi-motherboard-price-in-pakistan-4-19643-0-110823080607671.jpg"
+      image: id13
     },
     {
       id: 14,
@@ -170,7 +189,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 2,
-      image: "https://media.kingston.com/kingston/product/FURY_Beast_White_RGB_DDR5_2_angle-zm-lg.jpg"
+      image: id14
     },
     {
       id: 15,
@@ -182,7 +201,7 @@ const ProductsPage = () => {
       badge: "",
       isNew: false,
       popularity: 4,
-      image: "https://pakbyte.pk/cdn/shop/files/ASUS_DUAL_RTX4070S_TI_16G_DDR6X_Graphics_Card_4_2b5c842e-8bae-43fe-aebc-d054d7690603_1024x.jpg?v=1721319308"
+      image: id15
     },
     {
       id: 16,
@@ -194,7 +213,7 @@ const ProductsPage = () => {
       badge: "New",
       isNew: true,
       popularity: 3,
-      image: "https://i.pcmag.com/imagery/reviews/0347LsFIXKpZfnKmReKUnY3-12..v1629995668.jpg"
+      image: id16
     }
   ];
 
