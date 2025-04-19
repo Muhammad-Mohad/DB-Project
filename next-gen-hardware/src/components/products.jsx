@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 
 const ProductsPage = () => {
-  // Product data
+  // Product data with actual images
   const products = [
     {
       id: 1,
@@ -13,7 +13,8 @@ const ProductsPage = () => {
       stock: "in-stock",
       badge: "Best Seller",
       isNew: false,
-      popularity: 5
+      popularity: 5,
+      image: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/ada/rtx-4080/geforce-ada-4080-og-1200x630.jpg"
     },
     {
       id: 2,
@@ -24,7 +25,8 @@ const ProductsPage = () => {
       stock: "in-stock",
       badge: "New",
       isNew: true,
-      popularity: 4
+      popularity: 4,
+      image: "https://static3.webx.pk/files/19643/Images/intel-core-i7-14700k-cpu-price-in-pakistan-2-19643-0-031223021450978.jpg"
     },
     {
       id: 3,
@@ -35,7 +37,8 @@ const ProductsPage = () => {
       stock: "in-stock",
       badge: "",
       isNew: false,
-      popularity: 3
+      popularity: 3,
+      image: "https://zahcomputers.pk/wp-content/uploads/2024/06/107710-G.SKILL-F5-5600J3636D32GA2-TZ5RK-RGB-64GB-Desktop-Memory-pakistan.jpg.webp"
     },
     {
       id: 4,
@@ -46,7 +49,8 @@ const ProductsPage = () => {
       stock: "in-stock",
       badge: "",
       isNew: false,
-      popularity: 2
+      popularity: 2,
+      image: "https://dlcdnwebimgs.asus.com/files/media/3151EBBB-8450-43F6-9994-D7E5E6A9D0E5/v1/img/spec/performance-m.png"
     },
     {
       id: 5,
@@ -57,7 +61,8 @@ const ProductsPage = () => {
       stock: "low-stock",
       badge: "",
       isNew: false,
-      popularity: 4
+      popularity: 4,
+      image: "https://elitegamingstore.pk/wp-content/uploads/2024/02/Samsung-990-PRO3.jpg"
     },
     {
       id: 6,
@@ -68,7 +73,128 @@ const ProductsPage = () => {
       stock: "in-stock",
       badge: "",
       isNew: true,
-      popularity: 3
+      popularity: 3,
+      image: "https://static.gigabyte.com/StaticFile/Image/Global/369cb90b3cf9ca4b7b00802e3a1ce7b8/Product/36215/png/300"
+    },
+    {
+      id: 7,
+      title: "Corsair RM850x Power Supply",
+      category: "psu",
+      description: "850W 80+ Gold Certified Fully Modular ATX Power Supply.",
+      price: 149,
+      stock: "in-stock",
+      badge: "",
+      isNew: false,
+      popularity: 4,
+      image: "https://w11stop.com/image/cache/catalog/1-product-images/corsair/corsair-rm850x-modular-psu-600x315w.jpg.webp"
+    },
+    {
+      id: 8,
+      title: "Noctua NH-D15 Chromax Black",
+      category: "cooler",
+      description: "Premium dual-tower CPU cooler with NF-A15 140mm fans.",
+      price: 109,
+      stock: "in-stock",
+      badge: "Best Seller",
+      isNew: false,
+      popularity: 5,
+      image: "https://img.globaldata.pt/products/NH-D15CH.BK_5.jpg"
+    },
+    {
+      id: 9,
+      title: "AMD Ryzen 9 7950X",
+      category: "cpu",
+      description: "16-core, 32-thread unlocked desktop processor with 5.7GHz boost.",
+      price: 699,
+      stock: "in-stock",
+      badge: "",
+      isNew: false,
+      popularity: 4,
+      image: "https://cdn.mos.cms.futurecdn.net/WzuALAMWiCQ9DRN4MHey94-1200-80.jpg"
+    },
+    {
+      id: 10,
+      title: "Crucial P5 Plus 2TB",
+      category: "ssd",
+      description: "PCIe 4.0 NVMe SSD with sequential reads up to 6600MB/s.",
+      price: 199,
+      stock: "in-stock",
+      badge: "",
+      isNew: true,
+      popularity: 3,
+      image: "https://uk.crucial.com/content/dam/crucial/ssd-products/p5-plus/images/products/Crucial-p5-plus-ssd-standing-up-on-white-cropped-Image.psd.transform/small-jpg/img.jpg"
+    },
+    {
+      id: 11,
+      title: "Lian Li PC-O11 Dynamic",
+      category: "case",
+      description: "Premium mid-tower chassis with tempered glass panels.",
+      price: 159,
+      stock: "low-stock",
+      badge: "",
+      isNew: false,
+      popularity: 4,
+      image: "https://static3.webx.pk/files/821/Images/black-821-604096-110321072907.jpg"
+    },
+    {
+      id: 12,
+      title: "NZXT Kraken Z73 RGB",
+      category: "cooler",
+      description: "360mm AIO liquid cooler with LCD display and RGB lighting.",
+      price: 279,
+      stock: "in-stock",
+      badge: "",
+      isNew: false,
+      popularity: 3,
+      image: "https://images-cdn.ubuy.co.in/66cd6e90ffa56b66e15079e9-nzxt-kraken-x53-rgb-240mm-rl-krx53-rw.jpg"
+    },
+    {
+      id: 13,
+      title: "MSI MAG B760 Tomahawk",
+      category: "motherboard",
+      description: "Intel B760 chipset with DDR5 support and PCIe 5.0 slots.",
+      price: 229,
+      stock: "in-stock",
+      badge: "",
+      isNew: true,
+      popularity: 3,
+      image: "https://static3.webx.pk/files/19643/Images/msi-b760-tomahawk-wifi-motherboard-price-in-pakistan-4-19643-0-110823080607671.jpg"
+    },
+    {
+      id: 14,
+      title: "Kingston Fury Beast 64GB",
+      category: "ram",
+      description: "DDR5 5600MHz CL40 memory kit (2x32GB) with RGB lighting.",
+      price: 249,
+      stock: "in-stock",
+      badge: "",
+      isNew: false,
+      popularity: 2,
+      image: "https://media.kingston.com/kingston/product/FURY_Beast_White_RGB_DDR5_2_angle-zm-lg.jpg"
+    },
+    {
+      id: 15,
+      title: "ASUS TUF Gaming RTX 4070 Ti",
+      category: "gpu",
+      description: "12GB GDDR6X graphics card with military-grade components.",
+      price: 849,
+      stock: "in-stock",
+      badge: "",
+      isNew: false,
+      popularity: 4,
+      image: "https://pakbyte.pk/cdn/shop/files/ASUS_DUAL_RTX4070S_TI_16G_DDR6X_Graphics_Card_4_2b5c842e-8bae-43fe-aebc-d054d7690603_1024x.jpg?v=1721319308"
+    },
+    {
+      id: 16,
+      title: "Fractal Design Torrent",
+      category: "case",
+      description: "High-airflow case with 180mm front fans and open mesh design.",
+      price: 199,
+      stock: "in-stock",
+      badge: "New",
+      isNew: true,
+      popularity: 3,
+      image: "https://i.pcmag.com/imagery/reviews/0347LsFIXKpZfnKmReKUnY3-12..v1629995668.jpg"
     }
   ];
 
@@ -107,7 +233,7 @@ const ProductsPage = () => {
         title: product.title,
         price: product.price,
         quantity: 1,
-        image: `https://via.placeholder.com/300x200?text=${product.title.replace(/\s+/g, '+')}`
+        image: product.image
       });
     }
     
@@ -202,6 +328,9 @@ const ProductsPage = () => {
                 <option value="ram">Memory</option>
                 <option value="motherboard">Motherboards</option>
                 <option value="ssd">Storage</option>
+                <option value="psu">Power Supplies</option>
+                <option value="cooler">Cooling</option>
+                <option value="case">Cases</option>
               </select>
             </div>
             
@@ -233,9 +362,13 @@ const ProductsPage = () => {
                   </span>
                 )}
                 <img 
-                  src={`https://via.placeholder.com/300x200?text=${product.title.replace(/\s+/g, '+')}`} 
+                  src={product.image} 
                   alt={product.title}
-                  className="max-w-full max-h-full object-contain mix-blend-multiply"
+                  className="max-w-full max-h-full object-contain"
+                  onError={(e) => {
+                    e.target.onerror = null; 
+                    e.target.src = `https://via.placeholder.com/300x200?text=${product.title.replace(/\s+/g, '+')}`;
+                  }}
                 />
               </div>
               
