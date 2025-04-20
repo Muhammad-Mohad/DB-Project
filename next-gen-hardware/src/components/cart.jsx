@@ -75,13 +75,16 @@ const CartPage = () => {
   // Submit order
   const submitOrder = async (e) => {
     e.preventDefault();
+
+    const { subtotal, shipping, tax, total, itemCount } = calculateSummary();
   
     const customerData = {
       fullName: formData.name,
       email: formData.email,
       password: formData.cardCvv, 
       phoneNumber: '', 
-      customerAddress: formData.address
+      customerAddress: formData.address,
+      totalAmount: total
     };
   
     try {

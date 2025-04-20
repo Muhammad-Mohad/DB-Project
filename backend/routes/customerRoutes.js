@@ -19,29 +19,42 @@ const config = {
 };
 
 router.post('/', async (req, res) => {
-    const { fullName, email, password, phoneNumber, customerAddress } = req.body;
-  
+    const { fullName, email, password, phoneNumber, customerAddress, totalAmount } = req.body;
+
     try {
-      const hashedPassword = await bcrypt.hash(password, 10); 
-  
-      const pool = await sql.connect(config);
-  
-      await pool.request()
-        .input('FullName', sql.NVarChar(100), fullName)
-        .input('Email', sql.NVarChar(100), email)
-        .input('PasswordHash', sql.NVarChar(200), hashedPassword)
-        .input('PhoneNumber', sql.NVarChar(30), phoneNumber || null)
-        .input('CustomerAddress', sql.NVarChar(200), customerAddress || null)
-        .query(`
-          INSERT INTO Customers (FullName, Email, PasswordHash, PhoneNumber, CustomerAddress)
-          VALUES (@FullName, @Email, @PasswordHash, @PhoneNumber, @CustomerAddress)
-        `);
-  
-      res.status(201).json({ message: 'Customer registered successfully' });
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('FullName', sql.NVarChar(100), fullName)
+            .input('Email', sql.NVarChar(100), email)
+            .input('PasswordHash', sql.NVarChar(200), hashedPassword)
+            .input('PhoneNumber', sql.NVarChar(30), phoneNumber || null)
+            .input('CustomerAddress', sql.NVarChar(200), customerAddress || null)
+            .query(`
+                INSERT INTO Customers (FullName, Email, PasswordHash, PhoneNumber, CustomerAddress)
+                OUTPUT INSERTED.CustomerID
+                VALUES (@FullName, @Email, @PasswordHash, @PhoneNumber, @CustomerAddress)
+            `);
+
+        const customerID = result.recordset[0].CustomerID;
+
+        await pool.request()
+            .input('CustomerID', sql.Int, customerID)
+            .input('TotalAmount', sql.Int, totalAmount)
+            .input('OrderStatus', sql.NVarChar(50), 'Pending')
+            .query(`
+                INSERT INTO Orders (CustomerID, TotalAmount, OrderStatus)
+                VALUES (@CustomerID, @TotalAmount, @OrderStatus)
+            `);
+
+        res.status(201).json({ message: 'Customer registered and order placed successfully' });
     } catch (err) {
-      console.error('Error inserting customer:', err);
-      res.status(500).json({ error: 'Failed to register customer' });
+        console.error('Error inserting customer or order:', err);
+        res.status(500).json({ error: 'Failed to register customer and place order' });
     }
-  });
+});
+
 
 module.exports = router;
