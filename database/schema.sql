@@ -2,9 +2,6 @@
 create database myDB;
 use myDB;
 
-drop database myDB;
-USE master;
-
 
 drop table if exists Customers;
 drop table if exists Products;
@@ -14,7 +11,8 @@ drop table if exists Payments;
 drop table if exists Admins;
 drop table if exists Stocks;
 drop table if exists Returns;
-drop table if exists Reports;
+
+
 
 
 create table Customers
@@ -157,3 +155,12 @@ create table Returns
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails(OrderDetailID) ON DELETE CASCADE    -- Every Return has a reference for OrderDetail via the OrderDetailID from OrderDetails Table
 );
 
+
+select * from Products;
+select * from Customers;
+select * from Orders;
+select * from OrderDetails;
+select * from Payments;
+select * from Admins;
+select * from Stocks;
+select * from Returns;

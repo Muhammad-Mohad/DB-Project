@@ -73,21 +73,44 @@ const CartPage = () => {
   const prevStep = () => setCheckoutStep(prev => prev - 1);
 
   // Submit order
-  const submitOrder = (e) => {
+  const submitOrder = async (e) => {
     e.preventDefault();
-    // In a real app, you would send this to your backend
-    console.log('Order submitted:', { 
-      ...formData, 
-      items: cart, 
-      total: calculateSummary().total 
-    });
-    
-    // Clear cart and show success
-    localStorage.removeItem('cart');
-    setCart([]);
-    setCartCount(0);
-    setOrderComplete(true);
+  
+    const customerData = {
+      fullName: formData.name,
+      email: formData.email,
+      password: formData.cardCvv, 
+      phoneNumber: '', 
+      customerAddress: formData.address
+    };
+  
+    try {
+      const response = await fetch('http://localhost:5000/customers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(customerData)
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Customer registered successfully:', data);
+  
+        setOrderComplete(true);
+  
+        localStorage.removeItem('cart');
+        setCart([]);
+        setCartCount(0);
+      } else {
+        const error = await response.json();
+        console.error('Customer registration failed:', error);
+        alert('Error: ' + error.message || 'Failed to register customer.');
+      }
+    } catch (err) {
+      console.error('Error submitting customer:', err);
+      alert('Network or server error.');
+    }
   };
+  
 
   // Reset checkout
   const resetCheckout = () => {
