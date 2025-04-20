@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   return (
@@ -7,23 +8,23 @@ const Index = () => {
       <nav className="bg-white shadow-sm py-5 sticky top-0 z-50">
         <div className="container mx-auto px-5 max-w-6xl">
           <div className="flex justify-between items-center">
-            <a href="index.html" className="text-3xl font-bold text-blue-500 no-underline flex items-center gap-2.5">
+            <Link to="/" className="text-3xl font-bold text-blue-500 no-underline flex items-center gap-2.5">
               <span>⚡</span>
               NexGen Hardware
-            </a>
+            </Link>
             <div className="flex gap-8">
-              <a href="index.html" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
+              <Link to="/" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
                 Home
-              </a>
-              <a href="about.html" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
+              </Link>
+              <Link to="/about" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
                 About
-              </a>
-              <a href="account.html" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
+              </Link>
+              <Link to="/account" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
                 Account
-              </a>
-              <a href="cart.html" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
+              </Link>
+              <Link to="/cart" className="text-slate-800 no-underline font-medium hover:text-blue-500 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 after:transition-all hover:after:w-full">
                 Cart
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -44,12 +45,12 @@ const Index = () => {
               your ultimate PC. We offer top-tier performance parts from leading brands 
               with competitive pricing and expert support.
             </p>
-            <a 
-              href="products.jsx" 
+            <Link 
+              to="/products" 
               className="inline-block px-8 py-3.5 bg-blue-500 text-white no-underline rounded-lg font-semibold text-lg transition-all shadow-lg shadow-blue-500/20 hover:bg-blue-600 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/30"
             >
               Shop Now
-            </a>
+            </Link>
           </div>
         </div>
       </section>
