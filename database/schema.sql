@@ -54,12 +54,13 @@ create table Products
     ProductID int IDENTITY(1, 1) PRIMARY KEY,   -- ProductID is the primary key for Products Table
     ProductName NVARCHAR(100) not null,
     ProductDescription NVARCHAR(500),
-    Category NVARCHAR(50) Check (Category in ('GPU', 'RAM', 'CPU', 'Motherboard', 'Case', 'SSD')), 
+    Category NVARCHAR(50) Check (Category in ('GPU', 'RAM', 'CPU', 'Motherboard', 'Case', 'SSD', 'cooler', 'psu')), 
     Price int not null,
     Stock int,
     ImageURL NVARCHAR(200),
     AddedAt DATETIME DEFAULT GETDATE()
 );
+
 
 ALTER TABLE Products
 ADD CONSTRAINT p3 CHECK (Price > 0);
@@ -164,7 +165,3 @@ select * from Payments;
 select * from Admins;
 select * from Stocks;
 select * from Returns;
-
-
-delete from Customers;
-delete from Orders;

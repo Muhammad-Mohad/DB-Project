@@ -73,46 +73,48 @@ const CartPage = () => {
   const prevStep = () => setCheckoutStep(prev => prev - 1);
 
   // Submit order
-  // const submitOrder = async (e) => {
-  //   e.preventDefault();
+  const submitOrder = async (e) => {
+    e.preventDefault();
 
-  //   const { subtotal, shipping, tax, total, itemCount } = calculateSummary();
+    const { subtotal, shipping, tax, total, itemCount } = calculateSummary();
+    const customerID = localStorage.getItem('userId');
   
-  //   const customerData = {
-  //     fullName: formData.name,
-  //     email: formData.email,
-  //     password: formData.cardCvv, 
-  //     phoneNumber: '', 
-  //     customerAddress: formData.address,
-  //     totalAmount: total
-  //   };
+    const customerData = {
+      fullName: formData.name,
+      email: formData.email,
+      password: formData.cardCvv, 
+      phoneNumber: '', 
+      customerAddress: formData.address,
+      totalAmount: total,
+      customerID: customerID
+    };
   
-  //   try {
-  //     const response = await fetch('http://localhost:5000/customers', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(customerData)
-  //     });
+    try {
+      const response = await fetch('http://localhost:5000/customers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(customerData)
+      });
   
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log('Customer registered successfully:', data);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Customer registered successfully:', data);
   
-  //       setOrderComplete(true);
+        setOrderComplete(true);
   
-  //       localStorage.removeItem('cart');
-  //       setCart([]);
-  //       setCartCount(0);
-  //     } else {
-  //       const error = await response.json();
-  //       console.error('Customer registration failed:', error);
-  //       alert('Error: ' + error.message || 'Failed to register customer.');
-  //     }
-  //   } catch (err) {
-  //     console.error('Error submitting customer:', err);
-  //     alert('Network or server error.');
-  //   }
-  // };
+        localStorage.removeItem('cart');
+        setCart([]);
+        setCartCount(0);
+      } else {
+        const error = await response.json();
+        console.error('Customer registration failed:', error);
+        alert('Error: ' + error.message || 'Failed to register customer.');
+      }
+    } catch (err) {
+      console.error('Error submitting customer:', err);
+      alert('Network or server error.');
+    }
+  };
   
 
   // Reset checkout
