@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FaUser, 
   FaBox, 
@@ -11,6 +12,7 @@ import {
 } from 'react-icons/fa';
 
 const AccountPage = () => {
+  const navigate = useNavigate();
   // State for user data
   const [userData, setUserData] = useState({
     firstName: 'Mohad',
@@ -65,15 +67,6 @@ const AccountPage = () => {
   const [activeTab, setActiveTab] = useState('profile');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  // Simulate authentication check
-  useEffect(() => {
-    // In a real app, you would check authentication status here
-    if (!isLoggedIn) {
-      // Redirect to login page
-      console.log('Redirecting to login...');
-    }
-  }, [isLoggedIn]);
-
   // Tab navigation items
   const navItems = [
     { id: 'profile', icon: <FaUser />, label: 'Profile' },
@@ -88,10 +81,12 @@ const AccountPage = () => {
   const handleTabChange = (tabId) => {
     if (tabId === 'logout') {
       setIsLoggedIn(false);
+      navigate('/login');
       return;
     }
     setActiveTab(tabId);
   };
+  
 
   // Status badge component
   const StatusBadge = ({ status }) => {
