@@ -86,7 +86,8 @@ const CartPage = () => {
       phoneNumber: '', 
       customerAddress: formData.address,
       totalAmount: total,
-      customerID: customerID
+      customerID: customerID,
+      count: itemCount
     };
   
     try {
@@ -98,7 +99,6 @@ const CartPage = () => {
   
       if (response.ok) {
         const data = await response.json();
-        console.log('Customer registered successfully:', data);
   
         setOrderComplete(true);
   
@@ -107,11 +107,10 @@ const CartPage = () => {
         setCartCount(0);
       } else {
         const error = await response.json();
-        console.error('Customer registration failed:', error);
-        alert('Error: ' + error.message || 'Failed to register customer.');
+        alert('Error: ' + error.message || 'Failed to order');
       }
     } catch (err) {
-      console.error('Error submitting customer:', err);
+      console.error('Error submitting order', err);
       alert('Network or server error.');
     }
   };
