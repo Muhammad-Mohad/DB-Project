@@ -21,31 +21,57 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const payload = {
+    fullName: formData.name,
+    email: formData.email,
+    password: formData.password,
+    phoneNumber: formData.phone,
+    customerAddress: '123C'
+  };
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     // Validation
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       setIsLoading(false);
       return;
     }
-
+  
     if (!acceptedTerms) {
       alert('You must accept the terms and conditions');
       setIsLoading(false);
       return;
     }
-
-    // Simulate API call
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      alert('Account created successfully! Please login.');
-      window.location.href = '/login';
+  
+    try {
+      const response = await fetch('http://localhost:5000/customers/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      
+      if (response.ok) {
+        const result = await response.json();
+        alert('Account created successfully! Please login.');
+        window.location.href = '/login';
+      } else {
+        alert(`Signup failed: ${result.message || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('An error occurred while signing up.');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
+  
 
   const handleGoogleSignup = () => {
     setIsLoading(true);

@@ -164,3 +164,7 @@ select * from Payments;
 select * from Admins;
 select * from Stocks;
 select * from Returns;
+
+
+delete from Customers;
+delete from Orders;
