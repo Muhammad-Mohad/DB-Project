@@ -11,6 +11,7 @@ import {
   FaShoppingCart
 } from 'react-icons/fa';
 
+
 const AccountPage = () => {
   const navigate = useNavigate();
   // State for user data
@@ -86,6 +87,21 @@ const AccountPage = () => {
     }
     setActiveTab(tabId);
   };
+
+  useEffect(() => {
+    const fetchAccountData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/account'); 
+        if (!response.ok) throw new Error('Failed to fetch account data');
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error('Error fetching account data:', error);
+      }
+    };
+  
+    fetchAccountData();
+  }, []);
   
 
   // Status badge component

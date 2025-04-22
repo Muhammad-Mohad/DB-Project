@@ -60,6 +60,8 @@ const SignupPage = () => {
       if (response.ok) {
         const result = await response.json();
         alert('Account created successfully! Please login.');
+        const customerId = result.customerId;
+        localStorage.setItem('userId', customerId);
         window.location.href = '/login';
       } else {
         alert(`Signup failed: ${result.message || 'Unknown error'}`);
