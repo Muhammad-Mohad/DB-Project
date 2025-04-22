@@ -6,18 +6,39 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      localStorage.setItem('loggedIn', 'true');
-      alert('Login successful! Redirecting to home page...');
-      window.location.href = '/';
+    setErrorMessage(''); 
+
+    try {
+      const response = await fetch('http://localhost:5000/customers/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('userId', data.userId); 
+        alert('Login successful! Redirecting to home page...');
+        window.location.href = '/'; 
+      } else {
+        // If login fails, show error message
+        setErrorMessage(data.message || 'Login failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrorMessage('An error occurred. Please try again later.');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleGoogleLogin = () => {
