@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
             .query(`
                 SELECT productName, productDescription, category, price, stock
                 FROM Products
-                WHERE id = @ProductID
+                WHERE productid = @ProductID
             `);
 
         if (result.recordset.length === 0) {

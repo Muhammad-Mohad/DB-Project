@@ -19,24 +19,70 @@ import id15 from './images/id15.jpg';
 import id16 from './images/id16.webp';
 
 const ProductsPage = () => {
-  const products = [
-    { id: 1, title: "NVIDIA GeForce RTX 4080", category: "gpu", description: "16GB GDDR6X memory with DLSS 3 technology for ultimate gaming performance.", price: 1199, stock: "in-stock", badge: "Best Seller", isNew: false, popularity: 5, image: id1 },
-    { id: 2, title: "Intel Core i7-14700K", category: "cpu", description: "14th Gen Intel Core i7 Processor with 20 cores and 28 threads.", price: 449, stock: "in-stock", badge: "New", isNew: true, popularity: 4, image: id2 },
-    { id: 3, title: "G.Skill Trident Z5 32GB", category: "ram", description: "DDR5 6000MHz Memory Kit optimized for Intel and AMD systems.", price: 179, stock: "in-stock", badge: "", isNew: false, popularity: 3, image: id3 },
-    { id: 4, title: "ASUS ROG Strix B650", category: "motherboard", description: "AM5 ATX Motherboard with PCIe 5.0 and DDR5 support for AMD Ryzen.", price: 299, stock: "in-stock", badge: "", isNew: false, popularity: 2, image: id4 },
-    { id: 5, title: "Samsung 990 Pro 1TB", category: "ssd", description: "PCIe 4.0 NVMe SSD with read speeds up to 7,450 MB/s.", price: 139, stock: "low-stock", badge: "", isNew: false, popularity: 4, image: id5 },
-    { id: 6, title: "AMD Radeon RX 7800 XT", category: "gpu", description: "16GB GDDR6 memory with AMD RDNA 3 architecture for 1440p gaming.", price: 599, stock: "in-stock", badge: "", isNew: true, popularity: 3, image: id6 },
-    { id: 7, title: "Corsair RM850x Power Supply", category: "psu", description: "850W 80+ Gold Certified Fully Modular ATX Power Supply.", price: 149, stock: "in-stock", badge: "", isNew: false, popularity: 4, image: id7 },
-    { id: 8, title: "Noctua NH-D15 Chromax Black", category: "cooler", description: "Premium dual-tower CPU cooler with NF-A15 140mm fans.", price: 109, stock: "in-stock", badge: "Best Seller", isNew: false, popularity: 5, image: id8 },
-    { id: 9, title: "AMD Ryzen 9 7950X", category: "cpu", description: "16-core, 32-thread unlocked desktop processor with 5.7GHz boost.", price: 699, stock: "in-stock", badge: "", isNew: false, popularity: 4, image: id9 },
-    { id: 10, title: "Crucial P5 Plus 2TB", category: "ssd", description: "PCIe 4.0 NVMe SSD with sequential reads up to 6600MB/s.", price: 199, stock: "in-stock", badge: "", isNew: true, popularity: 3, image: id10 },
-    { id: 11, title: "Lian Li PC-O11 Dynamic", category: "case", description: "Premium mid-tower chassis with tempered glass panels.", price: 159, stock: "low-stock", badge: "", isNew: false, popularity: 4, image: id11 },
-    { id: 12, title: "NZXT Kraken Z73 RGB", category: "cooler", description: "360mm AIO liquid cooler with LCD display and RGB lighting.", price: 279, stock: "in-stock", badge: "", isNew: false, popularity: 3, image: id12 },
-    { id: 13, title: "MSI MAG B760 Tomahawk", category: "motherboard", description: "Intel B760 chipset with DDR5 support and PCIe 5.0 slots.", price: 229, stock: "in-stock", badge: "", isNew: true, popularity: 3, image: id13 },
-    { id: 14, title: "Kingston Fury Beast 64GB", category: "ram", description: "DDR5 5600MHz CL40 memory kit (2x32GB) with RGB lighting.", price: 249, stock: "in-stock", badge: "", isNew: false, popularity: 2, image: id14 },
-    { id: 15, title: "ASUS TUF Gaming RTX 4070 Ti", category: "gpu", description: "12GB GDDR6X graphics card with military-grade components.", price: 849, stock: "in-stock", badge: "", isNew: false, popularity: 4, image: id15 },
-    { id: 16, title: "Fractal Design Torrent", category: "case", description: "High-airflow case with 180mm front fans and open mesh design.", price: 199, stock: "in-stock", badge: "New", isNew: true, popularity: 3, image: id16 }
+  const baseProducts = [
+    { id: 1, image: id1, badge: "Best Seller", isNew: false, popularity: 5, stock: "in-stock"},
+    { id: 2, image: id2, badge: "New", isNew: true, popularity: 4, stock: "in-stock"},
+    { id: 3, image: id3, badge: "", isNew: false, popularity: 3, stock: "in-stock"},
+    { id: 4, image: id4, badge: "", isNew: false, popularity: 2, stock: "in-stock"},
+    { id: 5, image: id5, badge: "", isNew: false, popularity: 4, stock: "low-stock"},
+    { id: 6, image: id6, badge: "", isNew: true, popularity: 3, stock: "in-stock"},
+    { id: 7, image: id7, badge: "", isNew: false, popularity: 4, stock: "in-stock"},
+    { id: 8, image: id8, badge: "Best Seller", isNew: false, popularity: 5, stock: "in-stock"},
+    { id: 9, image: id9, badge: "", isNew: false, popularity: 4, stock: "in-stock"},
+    { id: 10, image: id10, badge: "", isNew: true, popularity: 3, stock: "in-stock"},
+    { id: 11, image: id11, badge: "", isNew: false, popularity: 4, stock: "low-stock"},
+    { id: 12, image: id12, badge: "", isNew: false, popularity: 3, stock: "in-stock"},
+    { id: 13, image: id13, badge: "", isNew: true, popularity: 3, stock: "in-stock"},
+    { id: 14, image: id14, badge: "", isNew: false, popularity: 2, stock: "in-stock"},
+    { id: 15, image: id15, badge: "", isNew: false, popularity: 4, stock: "in-stock"},
+    { id: 16, image: id16, badge: "New", isNew: true, popularity: 3, stock: "in-stock"}
   ];
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      const fetchedProducts = await Promise.all(
+        baseProducts.map(async (bp) => {
+          try {
+            const response = await fetch(`http://localhost:5000/products/${bp.id}`);
+            if (!response.ok) throw new Error(`Failed to fetch product ${bp.id}`);
+            const data = await response.json();
+
+            return {
+              id: bp.id,
+              image: bp.image,
+              badge: bp.badge,
+              isNew: bp.isNew,
+              popularity: bp.popularity,
+              title: data.productName,
+              description: data.productDescription,
+              category: data.category,
+              price: data.price,
+              stock: bp.stock
+            };
+          } catch (error) {
+            console.error(`Error fetching product ${bp.id}:`, error);
+            return {
+              id: bp.id,
+              image: bp.image,
+              badge: bp.badge,
+              isNew: bp.isNew,
+              popularity: bp.popularity,
+              title: "Unavailable",
+              description: "No description available",
+              category: "unknown",
+              price: 0,
+              stock: "unknown"
+            };
+          }
+        })
+      );
+      setProducts(fetchedProducts);
+    };
+
+    fetchAllProducts();
+  }, []);
 
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [sortBy, setSortBy] = useState('popular');
