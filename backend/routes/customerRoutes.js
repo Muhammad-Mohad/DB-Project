@@ -126,14 +126,17 @@ router.post('/', async (req, res) => {
 
         const pool = await sql.connect(config);
 
-        await pool.request()
+        const orderResult = await pool.request()
             .input('CustomerID', sql.Int, customerID)
             .input('TotalAmount', sql.Int, totalAmount)
             .input('OrderStatus', sql.NVarChar(50), 'Pending')
             .query(`
                 INSERT INTO Orders (CustomerID, TotalAmount, OrderStatus)
+                OUTPUT INSERTED.OrderID
                 VALUES (@CustomerID, @TotalAmount, @OrderStatus)
             `);
+
+          const orderID = orderResult.recordset[0].OrderID;
 
             await pool.request()
             .input('CustomerID', sql.Int, customerID)
@@ -144,7 +147,7 @@ router.post('/', async (req, res) => {
                 WHERE CustomerID = @CustomerID
             `);
 
-        res.status(201).json({ message: 'Customer registered and order placed successfully' });
+        res.status(201).json({ message: 'Customer registered and order placed successfully', orderID});
     } catch (err) {
         console.error('Error inserting customer or order:', err);
         res.status(500).json({ error: 'Failed to register customer and place order' });

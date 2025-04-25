@@ -99,6 +99,27 @@ const CartPage = () => {
   
       if (response.ok) {
         const data = await response.json();
+        if (data.orderID) {
+          localStorage.setItem('orderID', data.orderID);
+
+          const orderDetails = cart.map(item => ({
+            orderID: data.orderID,
+            productID: item.id,
+            quantity: item.quantity,
+            price: item.price*item.quantity
+          }));
+      
+          const orderDetailsResponse = await fetch('http://localhost:5000/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: orderDetails })
+          });
+      
+          if (!orderDetailsResponse.ok) {
+            const orderDetailsError = await orderDetailsResponse.json();
+            alert('Error submitting order details: ' + (orderDetailsError.message || 'Failed'));
+          }
+        }
   
         setOrderComplete(true);
   
