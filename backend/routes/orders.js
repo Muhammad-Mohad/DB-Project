@@ -56,6 +56,7 @@ router.get('/:customerId', async (req, res) => {
   
     try {
       const pool = await sql.connect(config);
+      
       const result = await pool
         .request()
         .input('CustomerID', sql.Int, customerId)
@@ -69,12 +70,32 @@ router.get('/:customerId', async (req, res) => {
           WHERE CustomerID = @CustomerID
         `);
   
-      res.json(result.recordset); 
+      const ordersWithDetails = await Promise.all(result.recordset.map(async (order) => {
+        const detailsResult = await pool
+          .request()
+          .input('OrderID', sql.Int, order.OrderID)
+          .query(`
+            SELECT 
+              SUM(Quantity) AS TotalQuantity 
+            FROM OrderDetails 
+            WHERE OrderID = @OrderID
+          `);
+  
+        const totalQuantity = detailsResult.recordset[0].TotalQuantity || 1; 
+  
+        return {
+          ...order,
+          totalQuantity
+        };
+      }));
+  
+      res.json(ordersWithDetails);
     } catch (error) {
       console.error('Error fetching orders:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  
   
 
 

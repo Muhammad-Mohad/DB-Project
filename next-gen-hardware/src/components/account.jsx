@@ -28,23 +28,23 @@ const AccountPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const customerId = localStorage.getItem('userId'); 
-
+        const customerId = localStorage.getItem('userId');
+  
         if (!customerId) {
           console.warn("No user ID found in localStorage.");
           return;
         }
-
+  
         const response = await fetch(`http://localhost:5000/customers/data/${customerId}`);
-
+  
         if (!response.ok) {
           throw new Error(`Server error: ${response.status}`);
         }
-
+  
         const customer = await response.json();
-
+  
         const [firstName = '', lastName = ''] = customer.fullname?.split(' ') || [];
-
+  
         setUserData(prev => ({
           ...prev,
           firstName,
@@ -52,39 +52,50 @@ const AccountPage = () => {
           email: customer.email,
           phone: customer.phonenumber,
           joinDate: new Date(customer.creationdate).toLocaleString('default', { month: 'long', year: 'numeric' }),
+          addresses: [
+            {
+              type: 'primary',
+              name: customer.fullname || '',
+              street: customer.customeraddress,
+              street2: '',
+              city: '',
+              country: '',
+              phone: customer.phonenumber || null
+            }
+          ]
         }));
       } catch (error) {
         console.error("Failed to fetch customer info:", error.message);
       }
-
+  
       try {
         const customerId = localStorage.getItem('userId');
         const response = await fetch(`http://localhost:5000/orders/${customerId}`);
-    
+  
         if (!response.ok) {
           throw new Error(`Server error: ${response.status}`);
         }
-    
+  
         const orders = await response.json();
-    
+  
         setUserData(prev => ({
           ...prev,
           orders: orders.map(order => ({
             id: order.OrderID,
             date: new Date(order.OrderDate).toLocaleDateString('default', { month: 'short', day: 'numeric', year: 'numeric' }),
-            items: 1, 
+            items: order.totalQuantity,
             total: order.TotalAmount,
             status: mapOrderStatus(order.OrderStatus)
           }))
         }));
-    
       } catch (error) {
         console.error("Failed to fetch orders:", error.message);
       }
     };
-
+  
     fetchUserData();
   }, []);
+  
 
   // State for active tab
   const [activeTab, setActiveTab] = useState('profile');
@@ -298,9 +309,109 @@ const AccountPage = () => {
                 </div>
               </div>
             )}
+ {/* Addresses Section */}
+ {activeTab === 'addresses' && (
+              <div>
+                <h2 className="text-xl font-semibold mb-6">Address Book</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {userData.addresses.map((address, index) => (
+                    <div 
+                      key={index}
+                      className={`border rounded-lg p-6 ${
+                        address.type === 'primary' ? 'border-2 border-blue-500' : 'border-gray-200'
+                      }`}
+                    >
+                      <h3 className="font-semibold text-lg mb-3">
+                        {address.type === 'primary' ? 'Primary Address' : 'Work Address'}
+                      </h3>
+                      <div className="space-y-1 text-gray-600">
+                        <p>{address.name}</p>
+                        <p>{address.street}</p>
+                        {address.street2 && <p>{address.street2}</p>}
+                        <p>{address.city}</p>
+                        <p>{address.country}</p>
+                        {address.phone && <p>Phone: {address.phone}</p>}
+                      </div>
+                      <div className="flex gap-4 mt-4 text-sm">
+                        <button className="text-blue-500 hover:text-blue-600">Edit</button>
+                        <button className="text-blue-500 hover:text-blue-600">Remove</button>
+                        {address.type !== 'primary' && (
+                          <button className="text-blue-500 hover:text-blue-600">Set as Default</button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button className="mt-6 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md font-medium flex items-center gap-2">
+                  <FaPlus /> Add New Address
+                </button>
+              </div>
+            )}
+            
+            {/* Wishlist Section */}
+            {activeTab === 'wishlist' && (
+              <div className="text-center py-12">
+                <h2 className="text-xl font-semibold mb-4">Your Wishlist</h2>
+                <p className="text-gray-500 mb-6">You haven't added any items to your wishlist yet.</p>
+                <a 
+                  href="/products" 
+                  className="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md font-medium"
+                >
+                  Browse Products
+                </a>
+              </div>
+            )}
+            
+            {/* Settings Section */}
+            {activeTab === 'settings' && (
+              <div>
+                <h2 className="text-xl font-semibold mb-6">Account Settings</h2>
+                <form className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                  <div className="space-y-2">
+                    <label className="block font-medium">Language</label>
+                    <select className="w-full px-4 py-2 border border-gray-200 rounded-md">
+                      <option>English</option>
+                      <option>Spanish</option>
+                      <option>French</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block font-medium">Currency</label>
+                    <select className="w-full px-4 py-2 border border-gray-200 rounded-md">
+                      <option>US Dollar (USD)</option>
+                      <option>Euro (EUR)</option>
+                      <option>British Pound (GBP)</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block font-medium">Email Notifications</label>
+                    <select className="w-full px-4 py-2 border border-gray-200 rounded-md">
+                      <option>All Notifications</option>
+                      <option>Order Updates Only</option>
+                      <option>None</option>
+                    </select>
+                  </div>
+                  <div className="md:col-span-2">
+                    <button
+                      type="button"
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md font-medium"
+                    >
+                      Save Settings
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-slate-800 text-white py-8 mt-12">
+        <div className="container mx-auto px-5 max-w-6xl text-center">
+          <p>&copy; 2025 NexGen Hardware. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };
