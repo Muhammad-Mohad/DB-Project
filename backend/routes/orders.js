@@ -39,19 +39,43 @@ router.post('/', async (req, res) => {
               `);
       });
 
-      // Insert all order details
       await Promise.all(insertPromises);
 
-      // Send back the orderID in the response
       res.status(201).json({
           message: 'Order details inserted successfully',
-          orderID: items[0].orderID // Assuming all items belong to the same order
+          orderID: items[0].orderID 
       });
   } catch (err) {
       console.error('Error inserting order details:', err);
       res.status(500).json({ message: 'Failed to insert order details' });
   }
 });
+
+router.get('/:customerId', async (req, res) => {
+    const customerId = req.params.customerId;
+  
+    try {
+      const pool = await sql.connect(config);
+      const result = await pool
+        .request()
+        .input('CustomerID', sql.Int, customerId)
+        .query(`
+          SELECT 
+            OrderID, 
+            OrderDate, 
+            TotalAmount, 
+            OrderStatus 
+          FROM Orders 
+          WHERE CustomerID = @CustomerID
+        `);
+  
+      res.json(result.recordset); 
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
 
 
   

@@ -154,5 +154,26 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/data/:id', async (req, res) => {
+  const customerId = req.params.id;
+
+  try {
+    const pool = await sql.connect(config); 
+    const result = await pool
+      .request()
+      .input('CustomerID', sql.Int, customerId)
+      .query('SELECT fullname, email, phonenumber, customeraddress, creationdate FROM Customers WHERE CustomerID = @CustomerID');
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error('Error fetching customer:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;
